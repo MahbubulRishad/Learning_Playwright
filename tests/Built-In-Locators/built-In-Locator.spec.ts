@@ -32,11 +32,31 @@ test("Verify the Welcome text - getByText()", async ({ page }) => {
 test("Verify the Register link is workable", async ({ page }) => {
     await page.goto("https://demo.nopcommerce.com/");
 
-    const registerL: Locator = page.getByRole("link", { name: "Register" });
-    await registerL.click();
+    // Add some delay
+    // // await page.hover("Register");
+    // await page.waitForTimeout(1000);
 
-    const registerFormHeader: Locator = page.getByRole("heading", {name: "Register"});
-    await expect(registerFormHeader).toBeVisible();
+    // await page.mouse.move(200, 300, { steps: 10 });
+    // await page.waitForTimeout(500);
+
+    await page.getByRole("link", { name: 'Register' }).click();
+    await expect(page.getByRole("heading", { name: 'Register' })).toBeVisible();
+});
+
+
+// 4. page.getByLabel() - to locate a form control by associated label's text
+// provide some input into label
+test("Verify Register Input fields", async ({ page }) => {
+    await page.goto("https://demo.nopcommerce.com/register");
+
+    const fillFirstName: Locator = page.getByLabel('First name:');
+    await fillFirstName.fill("Jhon");
+
+    const fillLastName: Locator = page.getByLabel('Last name:');
+    await fillLastName.fill("Doe");
+
+    const fillEmail: Locator = page.getByLabel('Email:');
+    await fillEmail.fill("abcd@gmail.com");
 });
 
 
