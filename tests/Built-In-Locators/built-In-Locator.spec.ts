@@ -60,3 +60,11 @@ test("Verify Register Input fields", async ({ page }) => {
 });
 
 
+
+// 5. page.getByPlaceholder() - placeholder
+test("Verify Placeholder in Search box", async ({page}) => {
+    await page.goto("https://demo.nopcommerce.com/register");
+
+    const fillSearchBox: Locator = page.getByPlaceholder('Search store');
+    await fillSearchBox.fill("Laptop");
+});
