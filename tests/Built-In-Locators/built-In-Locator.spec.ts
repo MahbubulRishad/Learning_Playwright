@@ -62,9 +62,53 @@ test("Verify Register Input fields", async ({ page }) => {
 
 
 // 5. page.getByPlaceholder() - placeholder
-test("Verify Placeholder in Search box", async ({page}) => {
+test("Verify Placeholder in Search box", async ({ page }) => {
     await page.goto("https://demo.nopcommerce.com/register");
 
     const fillSearchBox: Locator = page.getByPlaceholder('Search store');
     await fillSearchBox.fill("Laptop");
+});
+
+// Complete Test case
+test("Verify Registration is successfull", async ({ page }) => {
+    await page.goto("https://demo.nopcommerce.com/register");
+
+    // await page.getByLabel('/Male/i').check();
+    // await page.getByRole('radio', {name: '/^Male$/'}).check();
+    const selectGenderMale: Locator = page.locator('//label[@for = "gender-male"]');
+    await selectGenderMale.click();
+    await expect(selectGenderMale).toBeChecked();
+
+    const fillFirstName: Locator = page.getByLabel('First name:');
+    await fillFirstName.fill("JhonA");
+    await expect(fillFirstName).toBeVisible();
+
+    const fillLastName: Locator = page.getByLabel('Last name:');
+    await fillLastName.fill("DoeA");
+    await expect(fillLastName).toBeVisible();
+
+    const fillEmail: Locator = page.getByLabel('Email:');
+    await fillEmail.fill("abcdd@gmail.com");
+    await expect(fillEmail).toBeVisible();
+
+    const fillCompanyName: Locator = page.getByLabel('Company name:');
+    await fillCompanyName.fill("Test Company");
+    await expect(fillCompanyName).toBeVisible();
+
+    const newsLetterCheckbox: Locator = page.getByRole('checkbox', {name: 'Newsletter:'});
+    await expect(newsLetterCheckbox).toBeChecked();
+
+    const fillPassword: Locator = page.locator('//input[@id ="Password"]');
+    await fillPassword.fill('123456');
+    await expect(fillPassword).toBeVisible();
+
+    const fillConfirmPassword: Locator = page.locator('//input[@id ="ConfirmPassword"]'); 
+    await fillConfirmPassword.fill('123456');
+    await expect(fillConfirmPassword).toBeVisible();
+
+    const registerBtn: Locator = page.getByRole('button', {name: 'Register'});
+    await registerBtn.click();
+
+    const registrationConfirmationSuccessMsg: Locator = page.getByText('Your registration completed');
+    await expect(registrationConfirmationSuccessMsg).toBeVisible();
 });
